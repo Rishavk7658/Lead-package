@@ -2,7 +2,7 @@
 
 
 
-Route::group(['namespace' =>'Netweb\Crud\Http\Controllers'],function(){
+Route::group(['namespace' =>'Netweb\Lead\Http\Controllers'],function(){
 
     Route::get('crud','CrudController@index')->name('crud-index');
     Route::post('/insert','CrudController@insert');

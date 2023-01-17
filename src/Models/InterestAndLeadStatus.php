@@ -1,6 +1,6 @@
 <?php
 
-namespace Netweb\Crud\Models;
+namespace Netweb\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

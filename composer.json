@@ -1,5 +1,5 @@
 {
-    "name": "netweb/crud",
+    "name": "netweb/lead",
     "description": "This Package is from CRUD",
     "type": "library",
     "license": "MIT",
@@ -7,7 +7,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Netweb\\Crud\\":"src/"
+            "Netweb\\Lead\\":"src/"
         }
     }
 }

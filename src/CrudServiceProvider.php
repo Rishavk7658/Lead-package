@@ -1,5 +1,5 @@
 <?php
-namespace Netweb\Crud;
+namespace Netweb\Lead;
 use Illuminate\Support\ServiceProvider;
 
 class CrudServiceProvider extends ServiceProvider
@@ -12,12 +12,9 @@ class CrudServiceProvider extends ServiceProvider
 
          $this->mergeConfigFrom(__DIR__.'/config/crud.php', 'crud');
          
-    $this->publishes([
-        __DIR__.'/config/crud.php'=>config_path('crud.php'),
-    ]);
-
-         
-
+        $this->publishes([
+            __DIR__.'/config/crud.php'=>config_path('crud.php'),
+        ]);
     }
 
     public  function register(){

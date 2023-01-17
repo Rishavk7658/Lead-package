@@ -1,11 +1,11 @@
 <?php
 
-namespace Netweb\Crud\Http\Controllers;
+namespace Netweb\Lead\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Netweb\Crud\Models\Register;
+use Netweb\Lead\Models\Register;
 use App\Http\Controllers\Controller;
-use Netweb\Crud\Models\InterestAndLeadStatus;
+use Netweb\Lead\Models\InterestAndLeadStatus;
 
 class CrudController extends Controller
 {
