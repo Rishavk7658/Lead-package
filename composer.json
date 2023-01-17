@@ -1,0 +1,13 @@
+{
+    "name": "netweb/crud",
+    "description": "This Package is from CRUD",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Netweb\\Crud\\":"src/"
+        }
+    }
+}
