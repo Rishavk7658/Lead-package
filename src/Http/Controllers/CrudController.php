@@ -12,7 +12,7 @@ class CrudController extends Controller
    public function index(){
       $interest_level=InterestAndLeadStatus::where('option_name','interest_level')->get();
       $lead_status=InterestAndLeadStatus::where('option_name','lead_status')->get();
-    return view('crud::crud-index',compact('interest_level','lead_status'))->render(); 
+      return view('crud::crud-index',compact('interest_level','lead_status'))->render(); 
 
    }
 
