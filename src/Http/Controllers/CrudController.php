@@ -19,10 +19,12 @@ class CrudController extends Controller
 
 
    public function insert(Request $req){
+    dd($req->all());
      if($req){
       $data=new Register();
       $data->first_name=$req->first_name;
       $data->last_name=$req->last_name;
+      $data->sponser_id=$req->sponser_id;
       $data->email=$req->email;
       $data->mobile_number=$req->mobile_number;
       $data->country=$req->country;

@@ -172,7 +172,7 @@
               </div>
               <div class="col-md-12 py-2 cus-text-area">
                 <div class="form-floating">
-                  <textarea  class="form-control" placeholder="Description"></textarea>
+                  <textarea  class="form-control" name="description" placeholder="Description"></textarea>
                   <small class="has_error"> This Field is Required </small>
                   <label for="description">Description</label>
                  </div>
@@ -218,7 +218,10 @@
         
     });
         $('#save').on('click', function() {
+          let sponser_id = window.location.search.substring(1);
+          // alert(Param);
             var formData = new FormData($('#form')[0]);
+            formData.append('sponser_id',sponser_id)
             var first_name = $('input[name="first_name"]');
             if (first_name.val() == '') {
                 first_name.css('border', '1px solid red')
