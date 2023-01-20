@@ -12,9 +12,9 @@ class CrudServiceProvider extends ServiceProvider
 
          $this->mergeConfigFrom(__DIR__.'/config/crud.php', 'lead');
          
-        $this->publishes([
+         $this->publishes([
             __DIR__.'/config/crud.php'=>config_path('crud.php'),
-        ]);
+         ]);
     }
 
     public  function register(){
