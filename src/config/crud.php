@@ -1,3 +1,6 @@
 <?php
-return [];
+return [
+    'modalNameSpace' =>  'use App\Models\Countries;',
+    'modalname'     =>   'Countries'
+];
 ?>

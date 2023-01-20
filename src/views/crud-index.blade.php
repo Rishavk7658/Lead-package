@@ -122,11 +122,11 @@
                   <option name="country" selected disabled value="1">Country</option>
                   {{-- <option name="country" value="2">demo2</option>
                   <option name="country" value="3">demo3</option> --}}
-                  @if(isset($countries))
+                  {{-- @if(isset($countries))
                   @foreach($countries as $key => $value)
                   <option name="country" value="{{$value->id ?? ''}}">{{$value->country_name ?? ''}}</option>
                   @endforeach
-                  @endif
+                  @endif --}}
                 </select>
                 <small class="has_error"> This Field is Required </small>
                   {{-- <label for="mobile_number">Country</label> --}}

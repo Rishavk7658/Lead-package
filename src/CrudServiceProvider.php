@@ -10,7 +10,7 @@ class CrudServiceProvider extends ServiceProvider
          $this->loadViewsFrom(__DIR__.'/views', 'crud');
          $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
-         $this->mergeConfigFrom(__DIR__.'/config/crud.php', 'crud');
+         $this->mergeConfigFrom(__DIR__.'/config/crud.php', 'lead');
          
         $this->publishes([
             __DIR__.'/config/crud.php'=>config_path('crud.php'),
