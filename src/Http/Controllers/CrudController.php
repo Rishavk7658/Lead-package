@@ -6,20 +6,22 @@ use Illuminate\Http\Request;
 use Netweb\Lead\Models\Register;
 use App\Http\Controllers\Controller;
 use Netweb\Lead\Models\InterestAndLeadStatus;
+use App\Models\Countries;
 
 class CrudController extends Controller
 {
    public function index(){
+    $countries=Countries::all();
       $interest_level=InterestAndLeadStatus::where('option_name','interest_level')->get();
       $lead_status=InterestAndLeadStatus::where('option_name','lead_status')->get();
-      return view('crud::crud-index',compact('interest_level','lead_status'))->render(); 
+      return view('crud::crud-index',compact('interest_level','lead_status','countries'))->render(); 
 
    }
 
 
 
    public function insert(Request $req){
-    dd($req->all());
+    // dd($req->all());
      if($req){
       $data=new Register();
       $data->first_name=$req->first_name;
