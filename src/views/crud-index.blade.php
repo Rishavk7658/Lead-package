@@ -126,6 +126,7 @@
                   @foreach($countries as $key => $value)
                   <option name="country" value="{{$value->id ?? ''}}">{{$value->country_name ?? ''}}</option>
                   @endforeach
+                  @endif
                 </select>
                 <small class="has_error"> This Field is Required </small>
                   {{-- <label for="mobile_number">Country</label> --}}
