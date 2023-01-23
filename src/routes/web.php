@@ -13,7 +13,7 @@ Route::group(['namespace' =>'Netweb\Lead\Http\Controllers'],function(){
     Route::post('/delete-interest-level','CrudController@delete_interest_level');
 
     Route::get('/admin-lead-status','CrudController@admin_lead_status');
-    Route::post('/store-lead-status','CrudController@store_lead_status');
+    // Route::post('/store-lead-status','CrudController@store_lead_status');
 
 
 });

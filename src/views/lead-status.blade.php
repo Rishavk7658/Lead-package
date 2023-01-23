@@ -362,7 +362,7 @@
                 lead_status.siblings('.has_error').hide()
             }
             $.ajax({
-                url: "{{ url('/store-lead-status') }}"
+                url: "{{ url('/store-interest-level') }}"
                 , type: 'POST'
                 , data: formData
                 , contentType: false
