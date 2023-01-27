@@ -201,6 +201,13 @@
       </div>
     </section>
 {{-- </body> --}}
+@php
+$prefix=config('lead.User_middleware_prefix');
+
+ $url1 = $prefix . '/insert';
+
+
+@endphp
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" >
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" rel="stylesheet">
@@ -326,7 +333,7 @@
             // var id="1234";
             // console.log(formData)
             $.ajax({
-                url: "{{ url('/insert') }}"
+                url: "{{ url($url1) }}"
                 , type: 'POST'
                 , data: formData
                 , contentType: false

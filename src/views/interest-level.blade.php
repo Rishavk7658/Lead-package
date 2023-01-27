@@ -227,7 +227,7 @@
   @endphp
     @section($section)
 
-    <section class="register-form cus-lebel-inter-form">
+    <section class="register-form cus-lebel-inter-form ">
         <div class="container">
             <div class="cus-lebel-form-inner">
                 <form action="" id="interest_form">
@@ -290,7 +290,14 @@
         </div>
     </section>
 {{-- </body> --}}
+@php
+$prefix=config('lead.Admin_middleware_prefix');
 
+ $url1 = $prefix . '/store-interest-level';
+ $url2=  $prefix . '/edit-interest-level';
+ $url3=  $prefix . '/delete-interest-level';
+
+@endphp
 
 <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
 <script>
@@ -309,7 +316,7 @@
                 interest_level.siblings('.has_error').hide()
             }
             $.ajax({
-                url: "{{ url('/store-interest-level') }}"
+                url: "{{ url($url1) }}"
                 , type: 'POST'
                 , data: formData
                 , contentType: false
@@ -338,7 +345,7 @@
             var token="{{ csrf_token() }}";
             // alert(id)
             $.ajax({
-                url: "{{ url('/edit-interest-level') }}"
+                url: "{{ url($url2) }}"
                 , type: 'POST'
                 , data: {_token:token,'id' : id}
                 , success: function(data) {
@@ -356,7 +363,7 @@
             var token="{{ csrf_token() }}";
             // alert(id)
             $.ajax({
-                url: "{{ url('/delete-interest-level') }}"
+                url: "{{ url($url3) }}"
                 , type: 'POST'
                 , data: {_token:token,'id' : id}
                 , success: function(data) {
