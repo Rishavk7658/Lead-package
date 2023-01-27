@@ -396,9 +396,10 @@ $url3=  $prefix . '/delete-interest-level';
                             , confirmButtonColor: '#DD6B55'
                             , confirmButtonText: 'Ok'
                             , cancelButtonText: 'Close'
-                        }).then(() => {
+                        })
+                        // .then(() => {
                             location.reload();
-                        });
+                        // });
                     }
 
 
@@ -447,9 +448,10 @@ $url3=  $prefix . '/delete-interest-level';
                             // confirmButtonColor: '#DD6B55',
                             // confirmButtonText: false,
                             // cancelButtonText: false,
-                        }).then(() => {
+                        })
+                        // .then(() => {
                             location.reload();
-                        });
+                        // });
 
                     }
                 }

@@ -346,11 +346,12 @@ $prefix=config('lead.User_middleware_prefix');
                         type: 'success',
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Ok',
-                        cancelButtonText: 'Close'
-                            }).then(() => {
+                        // confirmButtonText: 'Ok',
+                        // cancelButtonText: 'Close'
+                            })
+                            // .then(() => {
                                 location.reload();
-                            });
+                            // });
                   }
 
 

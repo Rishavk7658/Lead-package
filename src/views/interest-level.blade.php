@@ -327,13 +327,14 @@ $prefix=config('lead.Admin_middleware_prefix');
                         title: 'Success',
                         text: 'Interest Level Submitted',
                         type: 'success',
-                        showCancelButton: true,
+                        showCancelButton: false,
                         confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Ok',
-                        cancelButtonText: 'Close'
-                            }).then(() => {
+                        // confirmButtonText: 'Ok',
+                        // cancelButtonText: 'Close'
+                            })
+                            // .then(() => {
                                 location.reload();
-                            });
+                            // });
                     }
 
 
@@ -376,9 +377,10 @@ $prefix=config('lead.Admin_middleware_prefix');
                         // confirmButtonColor: '#DD6B55',
                         // confirmButtonText: 'Yes!',
                         // cancelButtonText: 'No.'
-                            }).then(() => {
+                            })
+                            // .then(() => {
                                 location.reload();
-                            });
+                            // });
 
                     }
                 }
