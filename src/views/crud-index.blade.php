@@ -1,7 +1,7 @@
 {{-- <!DOCTYPE html>
 <html lang="en"> --}}
   @php
-    $bar=config('lead.sidebar');
+    $bar=config('lead.UserSideBar');
   @endphp
  @extends($bar)
 <head>
@@ -82,7 +82,12 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<body>
+{{-- <body> --}}
+  @php
+    $section=config('lead.UserSectionName');
+  @endphp
+  @section($section)
+
 
     <section class="register-form cus-reg-form">
       <div class="container">
@@ -376,3 +381,4 @@ function onlyAlphabets(e, t) {
         }
 </script>
 {{-- </html> --}}
+@endsection
