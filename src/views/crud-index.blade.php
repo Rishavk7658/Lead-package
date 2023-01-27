@@ -92,6 +92,7 @@
     <section class="register-form cus-reg-form">
       <div class="container">
         <form action="" id="form">
+          @csrf
           <div class="card p-3 shadow">
             <div class="row">
               <div class="col-md-12">

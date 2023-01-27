@@ -282,6 +282,7 @@
         <div class="container">
             <div class="cus-lebel-form-inner">
                 <form action="" id="lead_status_form">
+                    @csrf
                     <div class="p-3">
                         <div class="row">
                             <div class="col-md-12">
@@ -396,11 +397,13 @@
         });
         $(document).on('click', '.edit', function() {
             var id = $(this).attr('id');
+            var token="{{ csrf_token() }}";
             // alert(id)
             $.ajax({
                 url: "{{ url('/edit-interest-level') }}"
                 , type: 'POST'
                 , data: {
+                    _token:token,
                     'id': id
                 }
                 , success: function(data) {
@@ -415,11 +418,13 @@
         })
         $(document).on('click', '.delete', function() {
             var id = $(this).attr('id');
+            var token="{{ csrf_token() }}";
             // alert(id)
             $.ajax({
                 url: "{{ url('/delete-interest-level') }}"
                 , type: 'POST'
                 , data: {
+                    _token:token,
                     'id': id
                 }
                 , success: function(data) {
