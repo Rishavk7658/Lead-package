@@ -1,5 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{{-- <!DOCTYPE html>
+<html lang="en"> --}}
+  @php
+    $bar=config('lead.sidebar');
+  @endphp
+ @extends($bar)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -190,7 +194,7 @@
         </form>
       </div>
     </section>
-</body>
+{{-- </body> --}}
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" >
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" rel="stylesheet">
@@ -371,4 +375,4 @@ function onlyAlphabets(e, t) {
             }
         }
 </script>
-</html>
+{{-- </html> --}}
