@@ -137,9 +137,18 @@
 
                   @foreach($data['countries'] as $key => $value)
 
-                  @if(isset($data['data']) ? $data['data']->country : '' == $value->id )
+                  {{-- @if(isset($data['data']) ? $data['data']->country : '' == $value->id )
                   <option name="country" value="{{$value->id }}" selected>{{$value->country_name?? ''}}
                   </option>
+                  @else
+                  <option name="country" value="{{$value->id ?? ''}}">{{$value->country_name ?? ''}}</option>
+                  @endif --}}
+                  @if(isset($data['data']))
+                  @if($value->id == $data['data']->country)
+                  <option name="country" value="{{$value->id }}" selected>{{$value->country_name?? ''}}
+                    @else
+                    <option name="country" value="{{$value->id ?? ''}}">{{$value->country_name ?? ''}}</option>
+                  @endif
                   @else
                   <option name="country" value="{{$value->id ?? ''}}">{{$value->country_name ?? ''}}</option>
                   @endif
@@ -156,7 +165,17 @@
                   <option name="state" selected disabled value="1">State</option>
                   @if(isset($data['states']))
                   @foreach($data['states'] as $key => $value)
+                  {{-- <option name="state" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option> --}}
+                  @if(isset($data['data']))
+                  @if($value->id == $data['data']->state)
+                  <option name="state" value="{{$value->id }}" selected>{{$value->name?? ''}}
+                    @else
+                    <option name="state" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option>
+
+                  @endif
+                  @else
                   <option name="state" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option>
+                  @endif
                   @endforeach
                   @endif
                 </select>
@@ -169,7 +188,16 @@
                   <option name="city" selected disabled value="1">City</option>
                   @if(isset($data['cities']))
                   @foreach($data['cities'] as $key => $value)
+                  {{-- <option name="city" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option> --}}
+                  @if(isset($data['data']))
+                  @if($value->id == $data['data']->city)
+                  <option name="city" value="{{$value->id }}" selected>{{$value->name?? ''}}
+                    @else
+                    <option name="city" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option>
+                  @endif
+                  @else
                   <option name="city" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option>
+                  @endif
                   @endforeach
                   @endif
                 </select>
@@ -230,7 +258,7 @@
               </div>
               <div class="col-md-12 py-2 cus-text-area">
                 <div class="form-floating">
-                  <textarea  class="form-control" name="description" id="description" placeholder="Description"></textarea>
+                  <textarea  class="form-control" name="description" id="description" placeholder="Description" >{{isset($data['data']) ? $data['data']->description : '' }}</textarea>
                   <small class="has_error"> This Field is Required </small>
                   <label for="description">Description</label>
                  </div>

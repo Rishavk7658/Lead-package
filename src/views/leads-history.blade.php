@@ -44,6 +44,9 @@ body {
   background-color: #3a65f1b0;
     border-color: #3a65f1b0;
 }
+.lead-history table{
+  width : 100%;
+}
 .lead-history td:hover
 {
   transform: scale(1.1);
@@ -271,14 +274,14 @@ body {
     $section=config('lead.UserSectionName');
   @endphp
   @section($section)
-
+{{-- 
   @php
 $prefix=config('lead.User_middleware_prefix');
 
  $url1 = $prefix . '/insert';
 
 
-@endphp
+@endphp --}}
 
 <div class="content-wrapper">
     <section class="register-form cus-reg-form lead-history">
@@ -318,11 +321,15 @@ $prefix=config('lead.User_middleware_prefix');
                       <td>
                         {{-- <button>Add Next follow up</button> --}}
                       
-                        <button type="button" class="btn btn-success" id="modal-button" user_id="{{$lead->id ?? ''}}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-success modal-button"  user_id="{{$lead->id ?? ''}}" data-bs-toggle="modal" data-bs-target="#exampleModal">
                            Status
                         </button>
+                        <input type="hidden" id="current_lead_id">
+                        
                       </td>
-                      <td><button class="btn btn-info"type="button" data-bs-toggle="modal" data-bs-target="#exampleModalHistory">Lead History</button></td>
+                      <td>
+                        <button class="btn btn-info history" type="button"  lead_id="{{$lead->id ?? ''}}" data-bs-toggle="modal" data-bs-target="#exampleModalHistory">Lead History</button>
+                      </td>
                       <td class="d-flex gap-1"> 
 
                         {{-- <button class="btn btn-sm btn-danger edit" id="{{$lead->id ?? ''}}"><i class="fa-solid fa-pen"></i>Edit</button> --}}
@@ -413,8 +420,7 @@ $prefix=config('lead.User_middleware_prefix');
         <div class="modal-body bg-dark">
             <div class="p-4">
                 <div class="custom-timeline">
-                  @foreach($history as $key => $val)
-                  {{-- @dump($val) --}}
+                  {{-- @foreach($history as $key => $val)
                   <div class="timeline-year" month-data={{ date("F", strtotime($val->next_follow_up_date
                     ))}}>
                     <div class="timeline-box left">
@@ -424,6 +430,9 @@ $prefix=config('lead.User_middleware_prefix');
                         <p>{{$val->description}}</p>
                       </div>
                     </div>
+                  </div>
+                    
+                  @endforeach --}}
                     {{-- <div class="timeline-box right">
                       <div class="timeline-content">
                         <h4 class="dateTimeline">13 April</h4>
@@ -440,9 +449,7 @@ $prefix=config('lead.User_middleware_prefix');
                           iusto primis ea eam.</p>
                       </div>
                     </div> --}}
-                  </div>
-                    
-                  @endforeach
+                  {{-- < --}}
                   {{-- <div class="timeline-year" month-data="January">
                     <div class="timeline-box left">
                       <div class="timeline-content">
@@ -537,9 +544,32 @@ $prefix=config('lead.User_middleware_prefix');
       }
 
     });
-
+    $('.modal-button').on('click', function() {
+      var lead =$(this).attr('user_id')
+      $('#current_lead_id').val(lead)
+      
+    });
+    $('.history').on('click', function() {
+      var lead_id =$(this).attr('lead_id')
+      var token="{{ csrf_token() }}";
+      $.ajax({
+                url: "{{ url('/get-lead-history') }}"
+                , type: 'get'
+                , data: {
+                  _token:token,
+                  'lead_id' : lead_id
+                }
+                , success: function(data) {
+                  if(data.status == 'success'){
+                    $('.custom-timeline').html(data.html)
+                  }
+                  
+                }
+            })
+      
+    });
         $('#next_follow_up_save').on('click', function() {
-         var lead_id= $('#modal-button').attr('user_id')
+         var lead_id= $('#current_lead_id').val()
         
           var formData = new FormData($('#next_lead')[0]);
           formData.append('lead_id',lead_id)

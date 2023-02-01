@@ -213,6 +213,7 @@ class CrudController extends Controller
             $logs->email      = $record->email;
             if($logs->save()){
               if($record->delete()){
+                $all_leads=LeadLogs::where('lead_id',$id)->delete();
                 $logs->update(['status' => 1]);
                 return Redirect::back();
               }
@@ -250,16 +251,42 @@ class CrudController extends Controller
       $leads=Register::
                         where('user_id',Auth::user()->user_id)->
                         get();
-
-      $history=  LeadLogs::select('description','next_follow_up_date')
-                        // ->WhereNotNull('next_follow_up_date')
-                        -> where('user_id',Auth::user()->user_id)
-                        ->groupby('description','next_follow_up_date')
-                        ->orderBy('next_follow_up_date', 'ASC')
-                        ->get();
-                        // dd($history);
       
-      return view('crud::leads-history',compact('leads','history'));
+      return view('crud::leads-history',compact('leads'));
+
+    }
+    public function get_lead_history(){
+      $lead_id = $_GET['lead_id'];
+      // dd($lead_id);
+      $history=  LeadLogs::select('description','next_follow_up_date')
+                         ->where('lead_id' , $lead_id)
+                         ->WhereNotNull('next_follow_up_date')
+                          ->where('user_id',Auth::user()->user_id)
+                          ->groupby('description','next_follow_up_date')
+                          ->orderBy('next_follow_up_date', 'ASC')
+                          ->get();
+                          $html='';
+                          $count=0;
+                          foreach($history as $val)
+                          {
+                            $class = ($count%2 != 0) ? "right" : "";
+                                    $html.=' <div class="timeline-year" month-data= '.date("F", strtotime($val->next_follow_up_date
+                                        )).'>
+                                        <div class="timeline-box '.$class.'">
+                                          <div class="timeline-content">
+                                            <h4 class="dateTimeline">'.date("d F", strtotime($val->next_follow_up_date
+                                              )).'</h4>
+                                            <p>'.$val->description.'</p>
+                                          </div>
+                                        </div>
+                                      </div>';
+
+                                      $count++;
+                    
+                          }
+                            return ['status'   =>'success',
+                                    'html'  => $html
+                            ];
 
     }
      

@@ -30,7 +30,7 @@ Route::group(['middleware' => ['web'],'namespace' =>'Netweb\Lead\Http\Controller
     Route::group(['prefix' => config('lead.User_middleware_prefix')], function () {
 
         Route::get('/lead-history','CrudController@lead_history_view');
-        });
+    });
         
         
         Route::get('crud/{id?}','CrudController@index')->name('crud-index');
@@ -38,6 +38,7 @@ Route::group(['middleware' => ['web'],'namespace' =>'Netweb\Lead\Http\Controller
 
         Route::post('/edit-lead','CrudController@edit_lead');
         Route::get('/delete-lead/{id?}','CrudController@delete_lead');
+        Route::get('/get-lead-history','CrudController@get_lead_history');
         Route::post('/add-next-foolow-up','CrudController@add_next_foolow_up');
 
 });
