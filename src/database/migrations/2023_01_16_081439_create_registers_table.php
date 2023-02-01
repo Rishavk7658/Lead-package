@@ -21,6 +21,8 @@ class CreateRegistersTable extends Migration
             $table->string('email');
             $table->string('mobile_number');
             $table->string('country');
+            $table->string('city');
+            $table->string('state');
             $table->string('interest_level');
             $table->string('lead_status');
             $table->string('description')->nullable();

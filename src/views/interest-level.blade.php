@@ -226,7 +226,7 @@
     $section=config('lead.AdminSectionName');
   @endphp
     @section($section)
-
+    <div class="content-wrapper">
     <section class="register-form cus-lebel-inter-form ">
         <div class="container">
             <div class="cus-lebel-form-inner">
@@ -289,6 +289,7 @@
             </div>
         </div>
     </section>
+    </div>
 {{-- </body> --}}
 @php
 $prefix=config('lead.Admin_middleware_prefix');

@@ -8,4 +8,8 @@ class Register extends Model
 {
     
     protected $guarded=[];
+    public function getInterest()
+    {
+         return $this->belongsTo('Netweb\Lead\Models\InterestAndLeadStatus' ,'interest_level', 'id');
+    }
 }

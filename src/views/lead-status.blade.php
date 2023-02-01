@@ -11,6 +11,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lead Status Form</title>
     <style>
+        .lead-status-div i {
+            font-family: 'FontAwesome';
+            font-style: normal;
+        }
         .cus-lebel-form-inner .table table {
             width: 100%;
             margin-top: 50px;
@@ -129,11 +133,11 @@
             border-color: #0073b7;
             border-radius: 10px;
             font-size: 17px;
-            padding: 5px 30px;
+            padding: 15px 30px;
             font-weight: 600;
             text-transform: uppercase;
             margin-left: 15px;
-            height: 100%;
+           
         }
 
         .cus-lebel-form-inner #lead_status_form .cus-search-btn .cus-btn button[type="button"]:hover {
@@ -277,81 +281,83 @@
     $section=config('lead.AdminSectionName');
   @endphp
     @section($section)
-
-    <section class="register-form cus-lebel-inter-form">
-        <div class="container">
-            <div class="cus-lebel-form-inner">
-                <form action="" id="lead_status_form">
-                    @csrf
-                    <div class="p-3">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h1 class="text-center mb-3">Add Lead Status </h1>
-                            </div>
-                            <div class="col-md-6 py-2 cus-search-btn">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="lead_status" name="lead_status"
-                                        placeholder="Add Status">
-                                    <small class="has_error"> This Field is Required </small>
-                                    <label for="lead_status"> Add Status</label>
-                                    <input type="hidden" id="id" name="id">
+    <div class="content-wrapper">
+        <section class="register-form cus-lebel-inter-form">
+            <div class="container">
+                <div class="cus-lebel-form-inner lead-status-div">
+                    <form action="" id="lead_status_form">
+                        @csrf
+                        <div class="p-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h1 class="text-center mb-3">Add Lead Status </h1>
                                 </div>
-                                <div class="cus-btn">
+                                <div class="col-md-12 d-flex py-2 cus-search-btn">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="lead_status" name="lead_status"
+                                            placeholder="Add Status">
+                                        <small class="has_error"> This Field is Required </small>
+                                        <label for="lead_status"> Add Status</label>
+                                        <input type="hidden" id="id" name="id">
+                                    </div>
+                                    <div class="cus-btn">
+                                        <button type="button" class="btn btn-primary" id="save">Submit</button>
+                                    </div>
+                                </div>
+    
+                                {{-- <div>
                                     <button type="button" class="btn btn-primary" id="save">Submit</button>
-                                </div>
+                                </div> --}}
                             </div>
-
-                            {{-- <div>
-                                <button type="button" class="btn btn-primary" id="save">Submit</button>
-                            </div> --}}
                         </div>
-                    </div>
-                </form>
-                
-                <div class="table">
-                    <div class="table-inner">
-                        <table>
-                            <thead>
+                    </form>
+                    
+                    <div class="table">
+                        <div class="table-inner">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Lead Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                @if(isset($lead_status))
+                                @php
+                                $sr=1;
+                                @endphp
+                                @foreach($lead_status as $key => $value)
                                 <tr>
-                                    <th>Sr.No</th>
-                                    <th>Lead Status</th>
-                                    <th>Action</th>
+                                    <td>{{$sr}}</td>
+                                    <td>{{ $value->option_value ?? ''}}</td>
+                                    <td>
+                                        {{-- <button class="btn btn-sm btn-danger edit"
+                                            id="{{$value->id ?? ''}}">Edit</button>
+                                        <button class="btn btn-sm btn-danger delete"
+                                            id="{{$value->id ?? ''}}">Delete</button> --}}
+                                        <button class="btn btn-sm btn-danger edit" id="{{$value->id ?? ''}}"><i
+                                                class="fa-solid fa-pen"></i>Edit</button>
+                                        <button class="btn btn-sm btn-danger delete" id="{{$value->id ?? ''}}"><i
+                                                class="fa-sharp fa-solid fa-trash"></i>Delete</button>
+                                    </td>
+    
                                 </tr>
-                            </thead>
-                            @if(isset($lead_status))
-                            @php
-                            $sr=1;
-                            @endphp
-                            @foreach($lead_status as $key => $value)
-                            <tr>
-                                <td>{{$sr}}</td>
-                                <td>{{ $value->option_value ?? ''}}</td>
-                                <td>
-                                    {{-- <button class="btn btn-sm btn-danger edit"
-                                        id="{{$value->id ?? ''}}">Edit</button>
-                                    <button class="btn btn-sm btn-danger delete"
-                                        id="{{$value->id ?? ''}}">Delete</button> --}}
-                                    <button class="btn btn-sm btn-danger edit" id="{{$value->id ?? ''}}"><i
-                                            class="fa-solid fa-pen"></i>Edit</button>
-                                    <button class="btn btn-sm btn-danger delete" id="{{$value->id ?? ''}}"><i
-                                            class="fa-sharp fa-solid fa-trash"></i>Delete</button>
-                                </td>
-
-                            </tr>
-                            @php
-                            $sr++
-                            @endphp
-
-
-                            @endforeach
-                            @endif
-
-                        </table>
+                                @php
+                                $sr++
+                                @endphp
+    
+    
+                                @endforeach
+                                @endif
+    
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
+   
 {{-- </body> --}}
 @php
 $prefix=config('lead.Admin_middleware_prefix');

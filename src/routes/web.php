@@ -28,10 +28,17 @@ Route::group(['middleware' => ['web'],'namespace' =>'Netweb\Lead\Http\Controller
     });
 
     Route::group(['prefix' => config('lead.User_middleware_prefix')], function () {
-        Route::get('crud','CrudController@index')->name('crud-index');
-        Route::post('/insert','CrudController@insert');
-    });
 
+        Route::get('/lead-history','CrudController@lead_history_view');
+        });
+        
+        
+        Route::get('crud/{id?}','CrudController@index')->name('crud-index');
+        Route::post('/insert','CrudController@insert');
+
+        Route::post('/edit-lead','CrudController@edit_lead');
+        Route::get('/delete-lead/{id?}','CrudController@delete_lead');
+        Route::post('/add-next-foolow-up','CrudController@add_next_foolow_up');
 
 });
 ?>

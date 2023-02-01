@@ -1,9 +1,9 @@
-{{-- <!DOCTYPE html>
-<html lang="en"> --}}
-  @php
+<!DOCTYPE html>
+<html lang="en">
+  {{-- @php
     $bar=config('lead.UserSideBar');
   @endphp
- @extends($bar)
+ @extends($bar) --}}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,13 +82,16 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-{{-- <body> --}}
-  @php
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+
+<body>
+  {{-- @php
     $section=config('lead.UserSectionName');
   @endphp
-  @section($section)
+  @section($section) --}}
 
-
+<div class="content-wrapper">
     <section class="register-form cus-reg-form">
       <div class="container">
         <form action="" id="form">
@@ -100,28 +103,28 @@
               </div>
               <div class="col-md-6 py-2">
                <div class="form-floating">
-                <input type="text" class="form-control" id="first_name" name="first_name" onkeypress="return onlyAlphabets(event,this);" placeholder="First Name">
+                <input type="text" class="form-control" id="first_name" name="first_name" onkeypress="return onlyAlphabets(event,this);" value="{{ isset($data['data']) ? $data['data']->first_name : '' }}" placeholder="First Name">
                 <small class="has_error"> This Field is Required </small>
                 <label for="first_name">Fisrt Name</label>
                </div>
               </div>
               <div class="col-md-6 py-2">
                 <div class="form-floating">
-                  <input type="text" class="form-control" name="last_name" id="last_name" onkeypress="return onlyAlphabets(event,this);" placeholder="Last Name">
+                  <input type="text" class="form-control" name="last_name" id="last_name" onkeypress="return onlyAlphabets(event,this);"  value="{{ isset($data['data']) ? $data['data']->last_name : '' }}" placeholder="Last Name">
                   <small class="has_error"> This Field is Required </small>
                   <label for="last_name">Last Name</label>
                  </div>
               </div>
               <div class="col-md-6 py-2">
                 <div class="form-floating">
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Email address">
+                  <input type="email" class="form-control" id="email" name="email"  value="{{ isset($data['data']) ? $data['data']->email : '' }}"placeholder="Email address">
                   <small class="has_error"> This Field is Required </small>
                   <label for="email">Email address</label>
                  </div>
               </div>
               <div class="col-md-6 py-2">
                 <div class="form-floating">
-                  <input type="number" class="form-control" id="mobile_number" name="mobile_number" placeholder="Mobile Number">
+                  <input type="number" class="form-control" id="mobile_number" name="mobile_number"  value="{{ isset($data['data']) ? $data['data']->mobile_number : '' }}" placeholder="Mobile Number" >
                   <small class="has_error"> This Field is Required </small>
                   <label for="mobile_number">Mobile Number</label>
                  </div>
@@ -129,17 +132,48 @@
               <div class="col-md-6 py-2">
                 <div class="form-floating">
                   <select name="country" id="country" class="form-control">
-                  <option name="country" selected disabled value="1">Country</option>
-                  {{-- <option name="country" value="2">demo2</option>
-                  <option name="country" value="3">demo3</option> --}}
-                  @if(isset($countries))
-                  @foreach($countries as $key => $value)
+                    <option name="country" selected disabled value="1">Country</option>
+                  @if(isset($data['countries']))
+
+                  @foreach($data['countries'] as $key => $value)
+
+                  @if(isset($data['data']) ? $data['data']->country : '' == $value->id )
+                  <option name="country" value="{{$value->id }}" selected>{{$value->country_name?? ''}}
+                  </option>
+                  @else
                   <option name="country" value="{{$value->id ?? ''}}">{{$value->country_name ?? ''}}</option>
+                  @endif
+
                   @endforeach
                   @endif
                 </select>
                 <small class="has_error"> This Field is Required </small>
-                  {{-- <label for="mobile_number">Country</label> --}}
+                 </div>
+              </div>
+              <div class="col-md-6 py-2">
+                <div class="form-floating">
+                  <select name="state" id="state" class="form-control">
+                  <option name="state" selected disabled value="1">State</option>
+                  @if(isset($data['states']))
+                  @foreach($data['states'] as $key => $value)
+                  <option name="state" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option>
+                  @endforeach
+                  @endif
+                </select>
+                <small class="has_error"> This Field is Required </small>
+                 </div>
+              </div>
+              <div class="col-md-6 py-2">
+                <div class="form-floating">
+                  <select name="city" id="city" class="form-control">
+                  <option name="city" selected disabled value="1">City</option>
+                  @if(isset($data['cities']))
+                  @foreach($data['cities'] as $key => $value)
+                  <option name="city" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option>
+                  @endforeach
+                  @endif
+                </select>
+                <small class="has_error"> This Field is Required </small>
                  </div>
               </div>
               <div class="col-md-6 py-2">
@@ -147,9 +181,13 @@
                   <select name="interest_level" id="interest_level" class="form-control">
                   <option name="interest_level" selected disabled value="">Level Of Interest</option>
 
-                  @if(isset($interest_level))
-                  @foreach($interest_level as $key => $value)
+                  @if(isset($data['interest_level']))
+                  @foreach($data['interest_level'] as $key => $value)
+                  @if($value->id == isset($data['data']) ? $data['data']->interest_level : '' )
+                  <option name="interest_level" value="{{$data['data']->interest_level ?? ''}}" selected>{{$value->option_value ?? ''}}</option>
+                  @else
                   <option name="interest_level" value="{{$value->id ?? ''}}">{{$value->option_value ?? ''}}</option>
+                  @endif
                   @endforeach
                   @endif
                  
@@ -162,9 +200,14 @@
                 <div class="form-floating">
                   <select name="lead_status" id="lead_status" class="form-control">
                   <option name="lead_status" value="">Lead Status</option>
-                  @if(isset($lead_status))
-                  @foreach($lead_status as $key => $value)
-                  <option name="lead_status" value="{{$value->id ?? ''}}">{{$value->option_value ?? ''}}</option>
+                  @if(isset($data['lead_status']))
+                  @foreach($data['lead_status'] as $key => $value)
+                  @if($value->id == isset($data['data']) ? $data['data']->lead_status : '' )
+                  <option name="lead_status" value="{{$data['data']->lead_status ?? ''}}" selected>{{$value->option_value ?? ''}}</option>
+                  @else
+                   <option name="lead_status" value="{{$value->id ?? ''}}">{{$value->option_value ?? ''}}</option>
+                  @endif
+                 
                   @endforeach
                   @endif
                 
@@ -177,17 +220,17 @@
 
               <div class="col-md-6 py-2">
                 <div class="form-floating">
-                  <input type="text" class="form-control datetimepicker" id="next_follow_up_date" name="next_follow_up_date" placeholder="Next Follow Up Date">
+                  <input type="text" class="form-control datetimepicker" id="next_follow_up_date" name="next_follow_up_date"  value="{{ isset($data['data']) ? $data['data']->next_follow_up_date : '' }}" placeholder="Next Follow Up Date">
                   <small class="has_error"> This Field is Required </small>
                   <label for="next_follow_up_date">Next Follow Up Date</label>
                  </div>
               </div>
               <div class="hidden_filed">
-                <input type="hidden" id="id" name="id"> 
+                <input type="hidden" id="id" name="id" value="{{ (isset($data['id']) ? $data['id'] : '') }}"> 
               </div>
               <div class="col-md-12 py-2 cus-text-area">
                 <div class="form-floating">
-                  <textarea  class="form-control" name="description" placeholder="Description"></textarea>
+                  <textarea  class="form-control" name="description" id="description" placeholder="Description"></textarea>
                   <small class="has_error"> This Field is Required </small>
                   <label for="description">Description</label>
                  </div>
@@ -198,16 +241,20 @@
             </div>
           </div>
         </form>
+
       </div>
     </section>
-{{-- </body> --}}
-@php
+  </div>
+  
+</body>
+{{-- @php
 $prefix=config('lead.User_middleware_prefix');
 
  $url1 = $prefix . '/insert';
 
 
-@endphp
+@endphp --}}
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" >
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" rel="stylesheet">
@@ -221,6 +268,7 @@ $prefix=config('lead.User_middleware_prefix');
 <script>
     $(document).ready(function() {
       $('.has_error').hide();
+      $('.t').hide();
       $("#mobile_number").change(function() {
         var a = $(this).val();
         var filter = /^[6-9][0-9]{9}$/;
@@ -238,6 +286,15 @@ $prefix=config('lead.User_middleware_prefix');
                             $('#mobile_number').val('')
         }
         
+    });
+    $('#status').on('change', function() {
+      var status= $("#status").val()
+      if(status == 2){
+        $('.t').show();
+      }else{
+        $('.t').hide();
+      }
+
     });
         $('#save').on('click', function() {
           let sponser_id = window.location.search.substring(1);
@@ -333,7 +390,7 @@ $prefix=config('lead.User_middleware_prefix');
             // var id="1234";
             // console.log(formData)
             $.ajax({
-                url: "{{ url($url1) }}"
+                url: "{{ url('/insert') }}"
                 , type: 'POST'
                 , data: formData
                 , contentType: false
@@ -344,7 +401,7 @@ $prefix=config('lead.User_middleware_prefix');
                         title: 'Success',
                         text: data.msg,
                         type: 'success',
-                        showCancelButton: true,
+                        showCancelButton: false,
                         confirmButtonColor: '#DD6B55',
                         // confirmButtonText: 'Ok',
                         // cancelButtonText: 'Close'
@@ -358,6 +415,7 @@ $prefix=config('lead.User_middleware_prefix');
                 }
             })
         });
+
     });
     $(function () {
 
@@ -389,5 +447,5 @@ function onlyAlphabets(e, t) {
             }
         }
 </script>
-{{-- </html> --}}
-@endsection
+</html>
+{{-- @endsection --}}
