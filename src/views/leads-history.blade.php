@@ -274,14 +274,14 @@ body {
     $section=config('lead.UserSectionName');
   @endphp
   @section($section)
-{{-- 
+
   @php
 $prefix=config('lead.User_middleware_prefix');
 
  $url1 = $prefix . '/insert';
 
 
-@endphp --}}
+@endphp
 
 <div class="content-wrapper">
     <section class="register-form cus-reg-form lead-history">

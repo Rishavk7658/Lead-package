@@ -237,7 +237,7 @@
                             <div class="col-md-12">
                                 <h1 class="text-center mb-3">Add Level of Interest</h1>
                             </div>
-                            <div class="col-md-6 py-2 cus-search-btn">
+                            <div class="col-md-12 py-2 cus-search-btn">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="interest_level" name="interest_level" placeholder="Add Level">
                                     <small class="has_error"> This Field is Required </small>

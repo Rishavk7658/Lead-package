@@ -224,12 +224,11 @@ class CrudController extends Controller
 
     }
     public function add_next_foolow_up(Request $req){
-      // dd($req->all());
       if($req){
 
         $leads_log=new LeadLogs();
         $leads_log->lead_id               = $req->lead_id;
-        $leads_log->user_id               = Auth::user()->user_id; 
+        $leads_log->user_id               =Auth::guard('customer')->user()->user_id; 
         $leads_log->description           = $req->description2;
         $leads_log->next_follow_up_date   = $req->next_follow_up_date2;
         $leads_log->status                = $req->status;
@@ -257,36 +256,47 @@ class CrudController extends Controller
     }
     public function get_lead_history(){
       $lead_id = $_GET['lead_id'];
-      // dd($lead_id);
-      $history=  LeadLogs::select('description','next_follow_up_date')
-                         ->where('lead_id' , $lead_id)
-                         ->WhereNotNull('next_follow_up_date')
-                          ->where('user_id',Auth::user()->user_id)
-                          ->groupby('description','next_follow_up_date')
-                          ->orderBy('next_follow_up_date', 'ASC')
-                          ->get();
-                          $html='';
-                          $count=0;
-                          foreach($history as $val)
-                          {
-                            $class = ($count%2 != 0) ? "right" : "";
-                                    $html.=' <div class="timeline-year" month-data= '.date("F", strtotime($val->next_follow_up_date
-                                        )).'>
-                                        <div class="timeline-box '.$class.'">
-                                          <div class="timeline-content">
-                                            <h4 class="dateTimeline">'.date("d F", strtotime($val->next_follow_up_date
-                                              )).'</h4>
-                                            <p>'.$val->description.'</p>
-                                          </div>
-                                        </div>
-                                      </div>';
+      if($lead_id){
 
-                                      $count++;
-                    
-                          }
-                            return ['status'   =>'success',
-                                    'html'  => $html
-                            ];
+        $history=  LeadLogs::select('description','next_follow_up_date')
+        ->where('lead_id' , $lead_id)
+        ->WhereNotNull('next_follow_up_date')
+     ->where('user_id',Auth::guard('customer')->user()->user_id)
+         ->groupby('description','next_follow_up_date')
+         ->orderBy('next_follow_up_date', 'ASC')
+         ->get();
+         $html='';
+         $count=0;
+          if($history != ''){
+            foreach($history as $val)
+         {
+           $class = ($count%2 != 0) ? "right" : "";
+                   $html.=' <div class="timeline-year" month-data= '.date("F", strtotime($val->next_follow_up_date
+                       )).'>
+                       <div class="timeline-box '.$class.'">
+                         <div class="timeline-content">
+                           <h4 class="dateTimeline">'.date("d F", strtotime($val->next_follow_up_date
+                             )).'</h4>
+                           <p>'.$val->description.'</p>
+                         </div>
+                       </div>
+                     </div>';
+
+                     $count++;
+   
+         }
+
+          } else
+          {
+            $html.='<h2> No Record Found<h2>';
+          }
+         
+           return ['status'   =>'success',
+                   'html'  => $html
+           ];
+        
+      }
+
 
     }
      
