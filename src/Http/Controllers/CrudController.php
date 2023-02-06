@@ -5,9 +5,11 @@ namespace Netweb\Lead\Http\Controllers;
 use Illuminate\Http\Request;
 use Netweb\Lead\Models\LeadLogs;
 use Netweb\Lead\Models\Register;
+use Netweb\Lead\Mail\LeadMailable;
 use Netweb\Lead\Models\PackageLogs;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Netweb\Lead\Models\InterestAndLeadStatus;
 
@@ -21,20 +23,23 @@ class CrudController extends Controller
           $data['data']         = Register::find($id);
       }
       
-      $temp                     = config('lead.CountryModalNameSpace');
-      $modal                    = new $temp;
-      $data['countries']        = $modal->all();
+      // $temp                     = config('lead.CountryModalNameSpace');
+      // $modal                    = new $temp;
+      // $data['countries']        = $modal->all();
 
-      $modal_namespace2         = config('lead.StateModalNameSpace');
-      $modal2                   = new $modal_namespace2;
-      $data['states']           = $modal2->all();
+      // $modal_namespace2         = config('lead.StateModalNameSpace');
+      // $modal2                   = new $modal_namespace2;
+      // $data['states']           = $modal2->all();
 
-      $modal_namespace3         = config('lead.CityModalNameSpace');
-      $modal3                   = new $modal_namespace3;
-      $data['cities']           = $modal3->all();
+      // $modal_namespace3         = config('lead.CityModalNameSpace');
+      // $modal3                   = new $modal_namespace3;
+      // $data['cities']           = $modal3->all();
 
-      $data['interest_level']   = InterestAndLeadStatus::where('option_name','interest_level')->get();
-      $data['lead_status']      = InterestAndLeadStatus::where('option_name','lead_status')->get();
+      // $data['interest_level']   = InterestAndLeadStatus::where('option_name','interest_level')->get();
+      // $data['lead_status']      = InterestAndLeadStatus::where('option_name','lead_status')->get();
+        // $this->get_country_state_city($data);
+       $data=$this->get_country_state_city($data);
+      // dd ($data);
 
 
            return view('crud::crud-index',compact('data'))->render(); 
@@ -250,8 +255,11 @@ class CrudController extends Controller
       $leads=Register::
                         where('user_id',Auth::user()->user_id)->
                         get();
+                        $data['lead-history']='hostory';
+                        $data=$this->get_country_state_city($data);
+                        
       
-      return view('crud::leads-history',compact('leads'));
+      return view('crud::leads-history',compact('leads','data'));
 
     }
     public function get_lead_history(){
@@ -298,6 +306,43 @@ class CrudController extends Controller
       }
 
 
+    }
+    public function get_country_state_city($data){
+      $temp                     = config('lead.CountryModalNameSpace');
+      $modal                    = new $temp;
+      $data['countries']        = $modal->all();
+
+      $modal_namespace2         = config('lead.StateModalNameSpace');
+      $modal2                   = new $modal_namespace2;
+      $data['states']           = $modal2->all();
+
+      $modal_namespace3         = config('lead.CityModalNameSpace');
+      $modal3                   = new $modal_namespace3;
+      $data['cities']           = $modal3->all();
+
+      $data['interest_level']   = InterestAndLeadStatus::where('option_name','interest_level')->get();
+      $data['lead_status']      = InterestAndLeadStatus::where('option_name','lead_status')->get();
+      return $data;
+
+    }
+    public function send_mail(Request $req){
+      if($req){
+        $data=[
+          'message'        =>'Demo',
+          'link'            =>$req->link,
+        ];
+  
+        Mail::to($req->email)->send(new LeadMailable($data)); 
+        if (Mail::failures()) {
+                return ['status' => 'fail'];
+        }
+        else
+        {
+            return ['status' => 'success'];
+        }
+
+      }
+      
     }
      
 }

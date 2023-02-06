@@ -216,6 +216,67 @@
                 height: 50px;
             }
         }
+        .top-header>h1 {
+            margin: 0;
+            font-size: 24px
+        }
+
+
+        .top-header .breadcrumb {
+            /* float: right; */
+            background: transparent;
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 12px;
+            padding: 7px 5px;
+            /* position: absolute;
+            top: 15px;
+            right: 10px; */
+            border-radius: 2px
+        }
+
+        .top-header .breadcrumb>li {
+            display: inline-block;
+            color: #999;
+        }
+
+        .top-header .breadcrumb>li>a {
+            color: #0073b7;
+            text-decoration: none;
+            display: inline-block
+        }
+
+        .top-header .breadcrumb>li>a>.fa,
+        .top-header .breadcrumb>li>a>.glyphicon,
+        .top-header .breadcrumb>li>a>.ion {
+            margin-right: 5px
+        }
+
+        .top-header .breadcrumb>li.sub-bread {
+            color: #696969;
+        }
+
+        .top-header > *{
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        @media (max-width: 991px) {
+
+.top-header>.breadcrumb {
+    position: relative;
+    margin-top: 5px;
+    top: 0;
+    right: 0;
+    float: none;
+    background: #d2d6de;
+    padding-left: 10px
+}
+
+.top-header>.breadcrumb li:before {
+    color: #97a0b3
+}
+
+}
         
     </style>
 </head>
@@ -227,6 +288,16 @@
   @endphp
     @section($section)
     <div class="content-wrapper">
+        <div class="content-header sty-one">
+            <div class="top-header d-md-flex d-block justify-content-between align-items-center">
+                <h1 class="text-black">Interest Level</h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"> Home </a></li>
+                    <li class="sub-bread"><i class="fa fa-angle-right"></i> Lead Master </li>
+                    <li><i class="fa fa-angle-right"></i> Interest Level</li>
+                </ol>
+            </div>
+        </div>
     <section class="register-form cus-lebel-inter-form ">
         <div class="container">
             <div class="cus-lebel-form-inner">
@@ -329,9 +400,10 @@ $prefix=config('lead.Admin_middleware_prefix');
                         text: 'Interest Level Submitted',
                         type: 'success',
                         showCancelButton: false,
-                        confirmButtonColor: '#DD6B55',
-                        // confirmButtonText: 'Ok',
-                        // cancelButtonText: 'Close'
+                        showConfirmButton: false,
+                        // confirmButtonColor: '#DD6B55',
+                        confirmButtonText: false,
+                        cancelButtonText: false
                             })
                             // .then(() => {
                                 location.reload();
@@ -374,7 +446,8 @@ $prefix=config('lead.Admin_middleware_prefix');
                         title: 'Success',
                         text: 'Interest Level Deleted.',
                         type: 'success',
-                        // showCancelButton: true,
+                        showCancelButton: false,
+                        showConfirmButton: false,
                         // confirmButtonColor: '#DD6B55',
                         // confirmButtonText: 'Yes!',
                         // cancelButtonText: 'No.'

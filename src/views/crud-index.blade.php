@@ -144,13 +144,13 @@
                   <option name="country" value="{{$value->id ?? ''}}">{{$value->country_name ?? ''}}</option>
                   @endif --}}
                   @if(isset($data['data']))
-                  @if($value->id == $data['data']->country)
-                  <option name="country" value="{{$value->id }}" selected>{{$value->country_name?? ''}}
+                  @if($value->country_id == $data['data']->country)
+                  <option name="country" value="{{$value->country_id }}" selected>{{$value->country_name?? ''}}
                     @else
-                    <option name="country" value="{{$value->id ?? ''}}">{{$value->country_name ?? ''}}</option>
+                    <option name="country" value="{{$value->country_id ?? ''}}">{{$value->country_name ?? ''}}</option>
                   @endif
                   @else
-                  <option name="country" value="{{$value->id ?? ''}}">{{$value->country_name ?? ''}}</option>
+                  <option name="country" value="{{$value->country_id ?? ''}}">{{$value->country_name ?? ''}}</option>
                   @endif
 
                   @endforeach
@@ -211,11 +211,26 @@
 
                   @if(isset($data['interest_level']))
                   @foreach($data['interest_level'] as $key => $value)
-                  @if($value->id == isset($data['data']) ? $data['data']->interest_level : '' )
-                  <option name="interest_level" value="{{$data['data']->interest_level ?? ''}}" selected>{{$value->option_value ?? ''}}</option>
+
+                  @if(isset($data['data']))
+                  @if($value->id == $data['data']->interest_level)
+                  <option name="interest_level" value="{{$value->id }}" selected>{{$value->option_value?? ''}}
+                    @else
+                    <option name="interest_level" value="{{$value->id ?? ''}}">{{$value->option_value ?? ''}}</option>
+                  @endif
                   @else
                   <option name="interest_level" value="{{$value->id ?? ''}}">{{$value->option_value ?? ''}}</option>
                   @endif
+
+
+
+                  {{-- @if($value->id == isset($data['data']) ? $data['data']->interest_level : '' )
+                  <option name="interest_level" value="{{$data['data']->interest_level ?? ''}}" selected>{{$value->option_value ?? ''}}</option>
+                  @else
+                  <option name="interest_level" value="{{$value->id ?? ''}}">{{$value->option_value ?? ''}}</option>
+                  @endif --}}
+
+
                   @endforeach
                   @endif
                  
@@ -230,11 +245,22 @@
                   <option name="lead_status" value="">Lead Status</option>
                   @if(isset($data['lead_status']))
                   @foreach($data['lead_status'] as $key => $value)
-                  @if($value->id == isset($data['data']) ? $data['data']->lead_status : '' )
+                  @if(isset($data['data']))
+                  @if($value->id == $data['data']->lead_status)
+                  <option name="lead_status" value="{{$value->id }}" selected>{{$value->option_value?? ''}}
+                    @else
+                    <option name="lead_status" value="{{$value->id ?? ''}}">{{$value->option_value ?? ''}}</option>
+                  @endif
+                  @else
+                  <option name="lead_status" value="{{$value->id ?? ''}}">{{$value->option_value ?? ''}}</option>
+                  @endif
+
+
+                  {{-- @if($value->id == isset($data['data']) ? $data['data']->lead_status : '' )
                   <option name="lead_status" value="{{$data['data']->lead_status ?? ''}}" selected>{{$value->option_value ?? ''}}</option>
                   @else
                    <option name="lead_status" value="{{$value->id ?? ''}}">{{$value->option_value ?? ''}}</option>
-                  @endif
+                  @endif --}}
                  
                   @endforeach
                   @endif
@@ -255,6 +281,9 @@
               </div>
               <div class="hidden_filed">
                 <input type="hidden" id="id" name="id" value="{{ (isset($data['id']) ? $data['id'] : '') }}"> 
+                <input type="hidden" id="while_edit_sponser_id" value="{{ (isset($data['data']) ? $data['data']->user_id : '') }}">
+                <input type="hidden" id="while-share-link">
+                <input type="hidden" id="self-create" value="{{Auth::guard('customer')->user()->user_id ?? ''}}">
               </div>
               <div class="col-md-12 py-2 cus-text-area">
                 <div class="form-floating">
@@ -297,6 +326,10 @@ $prefix=config('lead.User_middleware_prefix');
     $(document).ready(function() {
       $('.has_error').hide();
       $('.t').hide();
+      var sponser_id = window.location.search.substring(1);
+      var decode= atob(sponser_id)
+      $('#while-share-link').val(decode);
+
       $("#mobile_number").change(function() {
         var a = $(this).val();
         var filter = /^[6-9][0-9]{9}$/;
@@ -325,8 +358,18 @@ $prefix=config('lead.User_middleware_prefix');
 
     });
         $('#save').on('click', function() {
-          let sponser_id = window.location.search.substring(1);
+          // let sponser_id = window.location.search.substring(1);
           // alert(Param);
+          var sponser_id = $('#while-share-link').val();
+          if(sponser_id == ''){
+            var whileEdit=$('#while_edit_sponser_id').val();
+            if(whileEdit == ''){
+              sponser_id=$('#self-create').val();
+            }else{
+              sponser_id=whileEdit;
+            }
+          }
+          alert(sponser_id)
             var formData = new FormData($('#form')[0]);
             formData.append('sponser_id',sponser_id)
             var first_name = $('input[name="first_name"]');

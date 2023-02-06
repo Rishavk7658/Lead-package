@@ -398,10 +398,11 @@ $url3=  $prefix . '/delete-interest-level';
                             title: 'Success'
                             , text: 'Lead Status Submitted '
                             , type: 'success'
-                            , showCancelButton: true
-                            , confirmButtonColor: '#DD6B55'
-                            , confirmButtonText: 'Ok'
-                            , cancelButtonText: 'Close'
+                            , showCancelButton: false
+                            , showConfirmButton: false,
+                            // , confirmButtonColor: '#DD6B55'
+                            // , confirmButtonText: 'Ok'
+                            // , cancelButtonText: 'Close'
                         })
                         // .then(() => {
                             location.reload();
@@ -450,7 +451,8 @@ $url3=  $prefix . '/delete-interest-level';
                             title: 'Success'
                             , text: 'Lead Status Deleted.'
                             , type: 'success',
-                            // showCancelButton: true,
+                            showConfirmButton: false,
+                            showCancelButton: false,
                             // confirmButtonColor: '#DD6B55',
                             // confirmButtonText: false,
                             // cancelButtonText: false,
