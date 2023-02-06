@@ -28,6 +28,6 @@ class LeadMailable extends Mailable
      */
     public function build()
     {
-        return $this->markdown('lead::lead.email')->with(['data' => $this->data ]);
+        return $this->markdown('crud::lead.email')->with(['data' => $this->data ]);
     }
 }

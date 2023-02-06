@@ -2,8 +2,9 @@
 # Introduction
 
 {{$data['message']}}
+{{$data['link']}}
 
-@component('mail::button', ['url' => ''])
+@component('mail::button', ['url' => $data['link']])
 Button Text
 @endcomponent
 

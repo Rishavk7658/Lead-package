@@ -132,7 +132,7 @@
               <div class="col-md-6 py-2">
                 <div class="form-floating">
                   <select name="country" id="country" class="form-control">
-                    <option name="country" selected disabled value="1">Country</option>
+                    <option name="country"  value="">Country</option>
                   @if(isset($data['countries']))
 
                   @foreach($data['countries'] as $key => $value)
@@ -162,7 +162,7 @@
               <div class="col-md-6 py-2">
                 <div class="form-floating">
                   <select name="state" id="state" class="form-control">
-                  <option name="state" selected disabled value="1">State</option>
+                  <option name="state"  value="">State</option>
                   @if(isset($data['states']))
                   @foreach($data['states'] as $key => $value)
                   {{-- <option name="state" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option> --}}
@@ -185,7 +185,7 @@
               <div class="col-md-6 py-2">
                 <div class="form-floating">
                   <select name="city" id="city" class="form-control">
-                  <option name="city" selected disabled value="1">City</option>
+                  <option name="city"  value="">City</option>
                   @if(isset($data['cities']))
                   @foreach($data['cities'] as $key => $value)
                   {{-- <option name="city" value="{{$value->id ?? ''}}">{{$value->name ?? ''}}</option> --}}
@@ -207,7 +207,7 @@
               <div class="col-md-6 py-2">
                 <div class="form-floating">
                   <select name="interest_level" id="interest_level" class="form-control">
-                  <option name="interest_level" selected disabled value="">Level Of Interest</option>
+                  <option name="interest_level"  value="">Level Of Interest</option>
 
                   @if(isset($data['interest_level']))
                   @foreach($data['interest_level'] as $key => $value)
@@ -369,7 +369,7 @@ $prefix=config('lead.User_middleware_prefix');
               sponser_id=whileEdit;
             }
           }
-          alert(sponser_id)
+          // alert(sponser_id)
             var formData = new FormData($('#form')[0]);
             formData.append('sponser_id',sponser_id)
             var first_name = $('input[name="first_name"]');
@@ -408,6 +408,33 @@ $prefix=config('lead.User_middleware_prefix');
                 mobile_number.css('border', '1px solid #ced4da')
                 mobile_number.siblings('.has_error').hide()
             }
+            var country = $("#country");
+            if (country.val() == '') {
+                country.css('border', '1px solid red')
+                country.siblings('.has_error').show()
+                return false;
+            } else {
+                country.css('border', '1px solid #ced4da')
+                country.siblings('.has_error').hide()
+            }
+            var state = $("#state");
+            if (state.val() == '') {
+                state.css('border', '1px solid red')
+                state.siblings('.has_error').show()
+                return false;
+            } else {
+                state.css('border', '1px solid #ced4da')
+                state.siblings('.has_error').hide()
+            }
+            var city = $("#city");
+            if (city.val() == '') {
+                city.css('border', '1px solid red')
+                city.siblings('.has_error').show()
+                return false;
+            } else {
+                city.css('border', '1px solid #ced4da')
+                city.siblings('.has_error').hide()
+            }
             var interest_level = $('select[name="interest_level"]');
             if (interest_level.val() == '') {
                 interest_level.css('border', '1px solid red')
@@ -444,6 +471,7 @@ $prefix=config('lead.User_middleware_prefix');
                 description.css('border', '1px solid #ced4da')
                 description.siblings('.has_error').hide()
             }
+            
             var Email=$('#email').val();
            if(!isValidEmailAddress(Email)){
               swal({

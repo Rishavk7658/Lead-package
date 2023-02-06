@@ -449,8 +449,10 @@
     
                     </div>
                 </div>
+                <button class="btn btn-primary return-back">Return Back</button>
                 <button class="btn btn-success create-lead">Create lead</button>
                 <button class="btn btn-primary share_link" data-bs-toggle="modal" data-bs-target="#share_linkModel">Share Link</button>
+                
                 <div class="create-form" style=" margin-right: 11%">
                     @include('crud::crud-index')
     
@@ -476,7 +478,8 @@
                             @csrf
                             <label for="description">Description</label>
                             <textarea class="form-control" name="description2" id="description2"></textarea>
-                            <small class="has_error"> This Field is Required </small>
+                            <small class="has_error"> This Field is Required </small><br>
+
                             <label for="status">Status</label>
                             <select name="status" id="status" class="form-control">
                                 <option value="">--Select--</option>
@@ -484,6 +487,8 @@
                                 <option value="2">Next Follow Up Date</option>
                                 <option value="3">Close</option>
                             </select>
+                            <small class="has_error"> This Field is Required </small><br>
+                            
                             <div class="t">
                                 <label for="next_follow_up_date">Next Follow Up Date</label>
                                 <input type="text" class="form-control datetimepicker" id="next_follow_up_date2" name="next_follow_up_date2">
@@ -639,6 +644,7 @@
             $('.create-form').hide();
             $('.has_error').hide();
             $('.t').hide();
+            $('.return-back').hide();
     
             $(document).on("click", ".dateTimeline", function() {
                 $(this).toggleClass("show");
@@ -649,6 +655,15 @@
                 $('.table').hide();
                 $(this).hide();
                 $('.share_link').hide();
+                $('.return-back').show();
+            });
+            $(document).on("click", ".return-back", function() {
+                $('.create-form').hide();
+                $('.table').show();
+                $(this).hide();
+                $('.share_link').show();
+                $('.create-lead').show();
+                location.reload();
             });
     
     
@@ -709,6 +724,15 @@
                 } else {
                     remark.css('border', '1px solid #ced4da')
                     remark.siblings('.has_error').hide()
+                }
+                var status = $('input[name="status"]');
+                if (status.val() == '') {
+                    status.css('border', '1px solid red')
+                    status.siblings('.has_error').show()
+                    return false;
+                } else {
+                    status.css('border', '1px solid #ced4da')
+                    status.siblings('.has_error').hide()
                 }
     
                 $.ajax({
